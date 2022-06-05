@@ -51,14 +51,10 @@ class CodeMatrix:
             print(self.sequence[i], end=" ")
         print("")
 
-    def get_code(self, l, c):
-        return self.code_matrix[l][c]
+    def get_code(self, l, c): return self.code_matrix[l][c]
 
-    def get_sequence(self, i):
-        return self.sequence[i]
+    def get_sequence(self, i): return self.sequence[i]
 
-    def get_matrix_len(self):
-        return self.matrix_len
+    def get_matrix_len(self): return self.matrix_len
 
-    def get_seq_len(self):
-        return self.seq_len
+    def get_seq_len(self): return self.seq_len
