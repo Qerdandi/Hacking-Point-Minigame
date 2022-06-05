@@ -6,7 +6,7 @@ A matrix is generated randomly and you have a random sequence to resolve. To res
 ## Score:
 If you resolve correctly the sequence you earn 1 score point else you lose one score point. The more points you have, more the game will be difficult.
 ## Next update:
-I will add a system to save the score and more statistics about the player. I will also add a menu to launch the game.
+I will add a system to save the score and more statistics about the player. This data will be encrypted. I will also add a menu to launch the game.
 ## State:
 - [X] Work in progress
 - [ ] Work completed
