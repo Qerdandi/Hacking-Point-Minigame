@@ -8,6 +8,7 @@ class Design:
         self.sequence_marge = 10
         
         self.score_font_size = 72
+        self.win_rate_font_size = 36
         self.matrix_font_size = 25
         self.sequence_font_size = 24
 
@@ -16,6 +17,7 @@ class Design:
     
     def color(self):
         self.score_text_color = Color(255, 255, 255)
+        self.win_rate_text_color = Color(255, 255, 255)
         self.score_plane_color = Color(35, 30, 40)
         
         self.matrix_text_color = Color(200, 255, 0)

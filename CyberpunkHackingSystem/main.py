@@ -8,10 +8,12 @@ from save import *
 
 class Main:
     def __init__(self):
-        self.save_data = Save()
+        self.local_save = Save()
         self.button_list = []
-        self.score = self.save_data.get_score()
         self.counter = 0
+        self.score = self.local_save.get_data(1)
+        self.win = self.local_save.get_data(2)
+        self.loose = self.local_save.get_data(3)
 
         self.previous_line = 0
         self.previous_column = 0
@@ -19,15 +21,16 @@ class Main:
 
         self.matrix_len_bounds = [4, 5]
         self.sequence_len_bounds = [3, 4]
-        
+
         self.generate_game_level()
         self.ds = Design()
         pygame.init()
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.draw_game_level()
         self.loop()
-
+     
     def generate_game_level(self):
+        self.update_difficulty()
         matrix_len = randint(self.matrix_len_bounds[0], self.matrix_len_bounds[1])
         sequence_len = randint(self.sequence_len_bounds[0], self.sequence_len_bounds[1])
 
@@ -65,6 +68,19 @@ class Main:
         font = pygame.font.SysFont('calibri', font_size, True, False)
         score_text = font.render(str(self.score), True, self.ds.score_text_color)
         self.screen.blit(score_text, score_text.get_rect(center = plane.center))
+
+        # Win rate
+        font_size = self.ds.win_rate_font_size
+        font = pygame.font.SysFont('calibri', font_size, True, False)
+
+        win_rate = 0
+        try: 
+            win_rate = int(self.win/(self.win+self.loose)*100)
+        except Exception:
+            print("Divion by 0")
+
+        score_text = font.render(f"Win rate : {win_rate} %", True, self.ds.win_rate_text_color)
+        self.screen.blit(score_text, (font_size//2, plane.centery - font_size//2))
 
     def ui_matrix(self):
         # Plane
@@ -147,8 +163,9 @@ class Main:
                             print("GOOD MOVE")
                         else:
                             self.score -= 1
+                            self.loose += 1
                             self.ui_score()
-                            print("GAME OVER")
+                            print("BAD MOVE")
                             self.new_game()
                             break
 
@@ -156,12 +173,13 @@ class Main:
 
             if self.counter == self.code_matrix.get_seq_len():
                 self.score += 1
+                self.win += 1
                 print(f"SCORE : {self.score}")
                 self.new_game()
 
             pygame.display.update()
 
-        self.save_data.save_score(self.score)
+        self.local_save.save_data((self.score, self.win, self.loose))
         pygame.quit()
 
 main = Main()
