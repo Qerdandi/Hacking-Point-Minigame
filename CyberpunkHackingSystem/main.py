@@ -11,7 +11,7 @@ class Main:
         self.local_save = Save()
         self.button_list = []
         self.counter = 0
-        self.score = self.local_save.get_data(1)
+        self.score = self.local_save.get_data(1) # get data from save.py and '1' is the index in data list
         self.win = self.local_save.get_data(2)
         self.loose = self.local_save.get_data(3)
 
@@ -25,30 +25,30 @@ class Main:
         self.generate_game_level()
         self.ds = Design()
         pygame.init()
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN) # create a full screen window
         self.draw_game_level()
         self.loop()
      
     def generate_game_level(self):
         self.update_difficulty()
-        matrix_len = randint(self.matrix_len_bounds[0], self.matrix_len_bounds[1])
-        sequence_len = randint(self.sequence_len_bounds[0], self.sequence_len_bounds[1])
+        matrix_len = randint(self.matrix_len_bounds[0], self.matrix_len_bounds[1]) # set random size for the matrix
+        sequence_len = randint(self.sequence_len_bounds[0], self.sequence_len_bounds[1]) # set random size for the sequence
 
         self.code_matrix = CodeMatrix(matrix_len, sequence_len) # by default : matrix_len = 5 and seq_len = 4
-        self.code_matrix.create_code_matrix()
-        self.code_matrix.generate_sequence()
-        self.code_matrix.show_code_matrix()
-        self.code_matrix.show_sequence()
+        self.code_matrix.create_code_matrix() # create the matrix
+        self.code_matrix.generate_sequence() # create the sequence
+        self.code_matrix.show_code_matrix() # show matrix in console or terminal
+        self.code_matrix.show_sequence() # show sequence in console or terminal
 
     def draw_game_level(self):
-        self.screen.fill(self.ds.matrix_plane_color)
+        self.screen.fill(self.ds.matrix_plane_color) # set the background color of the window
         self.ui_score()
         self.ui_matrix()
         self.ui_sequence()
 
     def new_game(self):
         print("NEW GAME")
-        self.button_list.clear()
+        self.button_list.clear() # clear the button list to avoid, possibly, click on deleted button
         self.counter = 0
 
         self.previous_line = 0
@@ -58,10 +58,11 @@ class Main:
         self.generate_game_level()
         self.draw_game_level()
 
+    # explications of ui drawing (text and rectangle = plane) are in button.py
     def ui_score(self):
         # Plane
         font_size = self.ds.score_font_size
-        plane = pygame.Rect((0, 0), (self.screen.get_width(), 2*font_size))
+        plane = pygame.Rect((0, 0), (self.screen.get_width(), 2*font_size)) 
         pygame.draw.rect(self.screen, self.ds.border_color, plane, 2)
         
         # Score
@@ -74,10 +75,10 @@ class Main:
         font = pygame.font.SysFont('calibri', font_size, True, False)
 
         win_rate = 0
-        try: 
+        try: # the try allows to avoid, when launching the game for the first time, dividing by 0
             win_rate = int(self.win/(self.win+self.loose)*100)
         except Exception:
-            print("Divion by 0")
+            print("Diving by 0")
 
         score_text = font.render(f"Win rate : {win_rate} %", True, self.ds.win_rate_text_color)
         self.screen.blit(score_text, (font_size//2, plane.centery - font_size//2))
@@ -90,7 +91,7 @@ class Main:
         # Title
         font = pygame.font.SysFont('calibri', self.ds.matrix_font_size, True, False)
         ui_text = font.render("CODE MATRIX", True, self.ds.matrix_text_color)
-        self.screen.blit(ui_text, (plane.centerx - ui_text.get_width()//2, plane.top + self.ds.matrix_marge))
+        self.screen.blit(ui_text, (plane.centerx - ui_text.get_width()//2, plane.top + self.ds.matrix_margin))
 
         # Matrix
         matrix_len = self.code_matrix.get_matrix_len()
@@ -98,6 +99,7 @@ class Main:
             for c in range(matrix_len):
                 self.button_list.append(Button(str(self.code_matrix.get_code(l, c)), (plane.width, plane.height), matrix_len, l, c))
                 self.button_list[len(self.button_list)-1].draw(self.screen)
+        # every button are added in a list to check later if there are clicked
 
     def ui_sequence(self): 
         # Plane
@@ -106,7 +108,7 @@ class Main:
         pygame.draw.rect(self.screen, self.ds.sequence_text_color, plane, 2)
 
         # Title
-        marge = self.ds.sequence_marge
+        marge = self.ds.sequence_margin
         font_size = self.ds.sequence_font_size
         font = pygame.font.SysFont('calibri', font_size, True, False)
         ui_text = font.render("SEQUENCE REQUIRED TO UPLOAD", True, self.ds.sequence_text_color)
@@ -117,6 +119,9 @@ class Main:
             ui_text = font.render(str(self.code_matrix.get_sequence(i)), True, self.ds.sequence_text_color)
             self.screen.blit(ui_text, (size + size*i, plane.bottom - font_size - marge//2))
 
+    # this function verify, according to counter value, if the button clicked is on the same line or same column than the previous click
+    # for the first click, you must click on the first so we have : "elif self.counter != 0"
+    # after the first click, you must click on the same column so counter is odd for column and even for line. We use : "self.counter%2 == 0" 
     def on_same_line_or_column(self, button_list):
             if self.counter%2 == 0:
                 if self.counter == 0 and button_list.get_pos()[0] == 0:
@@ -152,21 +157,21 @@ class Main:
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    running = False
-                for i in range(len(self.button_list)):
-                    if event.type == pygame.MOUSEBUTTONDOWN and self.button_list[i].mouse_over_button() and not self.button_list[i].is_already_click():
-                        self.button_list[i].put_it_already_click(True)
-                        if self.button_list[i].code == self.code_matrix.get_sequence(self.counter) and self.on_same_line_or_column(self.button_list[i]):
-                            self.counter += 1
-                            self.button_list[i].draw_click(self.screen)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: # if escape button is pressed and released
+                    running = False # and of the game : you leave it
+                for i in range(len(self.button_list)): # we check every button
+                    if event.type == pygame.MOUSEBUTTONDOWN and self.button_list[i].mouse_over_button() and not self.button_list[i].is_already_click(): # if the mouse button is pressed and released on a matrix button and this button is not already click
+                        self.button_list[i].put_it_already_click(True) # we set this matrix button already clicked
+                        if self.button_list[i].code == self.code_matrix.get_sequence(self.counter) and self.on_same_line_or_column(self.button_list[i]): # if the matrix button value match with the coresponding sequence value and if his location is correct
+                            self.counter += 1 
+                            self.button_list[i].draw_click(self.screen) # the button is redraw with "already clicked" design
                             print("GOOD MOVE")
                         else:
                             self.score -= 1
                             self.loose += 1
-                            self.ui_score()
+                            self.ui_score() # the score ui is update
                             print("BAD MOVE")
-                            self.new_game()
+                            self.new_game() # the game is relaunched 
                             break
 
             self.update_difficulty()
@@ -179,7 +184,7 @@ class Main:
 
             pygame.display.update()
 
-        self.local_save.save_data((self.score, self.win, self.loose))
+        self.local_save.save_data((self.score, self.win, self.loose)) # save data as the score, the number of win and loose
         pygame.quit()
 
 main = Main()
