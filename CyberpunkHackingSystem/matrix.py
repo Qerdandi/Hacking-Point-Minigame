@@ -9,7 +9,7 @@ class CodeMatrix:
         self.sequence = ["0" for _ in range (seq_len)] # create a string table of one line (= the sequence)
 
     def create_code_matrix(self):  # sourcery skip: use-itertools-product
-        idList = ["1C", "E9", "55", "BD", "7A"]
+        idList = ["1C", "E9", "55", "BD", "7A", "FF"]
 
         for l in range(self.matrix_len):
             for c in range(self.matrix_len):
