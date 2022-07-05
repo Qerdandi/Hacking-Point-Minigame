@@ -1,6 +1,6 @@
-# Cyberpunk-2077-Hacking-System
+# Hacking Point Minigame
 ## Context:
-For my first project in python and to put in practice, my personal training, I decided to reproduce the hacking system in Cyberpunk 2077 when V connects to an access point. This is a little project that regroup python programming,  object oriented programming and user interfaces.
+For my first project in python and to put in practice, my personal training, I decided to code a breach protocol hacking minigame. This is a little project that regroup python programming, object oriented programming and user interfaces.
 ## Rules:
 A matrix is generated randomly and you have a random sequence to resolve. To resolve it, you need to select in order all symbols from the sequence in the matrix. The first symbol is selected on the first line. For next symbol, you need to alternate between column and line only to complete the path.
 
