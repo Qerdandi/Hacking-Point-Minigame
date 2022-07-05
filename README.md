@@ -5,7 +5,7 @@ For my first project in python and to put in practice, my personal training, I d
 A matrix is generated randomly and you have a random sequence to resolve. To resolve it, you need to select in order all symbols from the sequence in the matrix. The first symbol is selected on the first line. For next symbol, you need to alternate between column and line only to complete the path.
 
 <p align="center">
-  <img width="800" alt="Game screenshot Vs Cyberpunk game" src="https://user-images.githubusercontent.com/73184884/173236766-90583027-3c7e-4e0b-8b7c-9a6943bf9e56.png">
+  <img width="800" alt="Hacking Point Minigame" src="https://user-images.githubusercontent.com/73184884/177358359-1ca165b9-1d9a-4f4c-b944-061ccb9c03a2.png">
 </p>
 
 ## Score:
