@@ -26,7 +26,7 @@ class Save:
             key = data[0]
             message = data[index]
 
-            decrypted = Fernet(key).decrypt(message) # use the key and Fernet method to decrypte the message
+            decrypted = Fernet(key).decrypt(message) # use the key and Fernet method to decrypt the message
             return int(decrypted) # return the decrypted message converted in int
         except Exception:
             print("Invalid Key - Unsuccessfully decrypted")

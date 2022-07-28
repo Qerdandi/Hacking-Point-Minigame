@@ -1,7 +1,7 @@
 from pygame.locals import *
 
 # This class allows you to custom font size, margin and color of all the game 
-# (exept font that can be custom in main.py for each text components)
+# (except font that can be custom in main.py for each text components)
 
 class Design:
     def __init__(self):

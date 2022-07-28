@@ -5,7 +5,7 @@ class CodeMatrix:
         self.matrix_len = matrix_len
         self.seq_len = seq_len
 
-        self.code_matrix = [["0" for _ in range(matrix_len)] for _ in range(matrix_len)] # create a string matrix squarre of 0
+        self.code_matrix = [["0" for _ in range(matrix_len)] for _ in range(matrix_len)] # create a string matrix square of 0
         self.sequence = ["0" for _ in range (seq_len)] # create a string table of one line (= the sequence)
 
     def create_code_matrix(self):  # sourcery skip: use-itertools-product

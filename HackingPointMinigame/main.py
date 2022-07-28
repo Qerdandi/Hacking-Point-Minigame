@@ -162,7 +162,7 @@ class Main:
                 for i in range(len(self.button_list)): # we check every button
                     if event.type == pygame.MOUSEBUTTONDOWN and self.button_list[i].mouse_over_button() and not self.button_list[i].is_already_click(): # if the mouse button is pressed and released on a matrix button and this button is not already click
                         self.button_list[i].put_it_already_click(True) # we set this matrix button already clicked
-                        if self.button_list[i].code == self.code_matrix.get_sequence(self.counter) and self.on_same_line_or_column(self.button_list[i]): # if the matrix button value match with the coresponding sequence value and if his location is correct
+                        if self.button_list[i].code == self.code_matrix.get_sequence(self.counter) and self.on_same_line_or_column(self.button_list[i]): # if the matrix button value match with the corresponding sequence value and if his location is correct
                             self.counter += 1 
                             self.button_list[i].draw_click(self.screen) # the button is redraw with "already clicked" design
                             print("GOOD MOVE")
