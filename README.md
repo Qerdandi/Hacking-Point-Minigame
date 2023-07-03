@@ -15,9 +15,6 @@ If you resolve correctly the sequence you earn 1 score point else you lose one s
 ## Saving system :
 There is now a system to save your score and your win rate. Those data are encrypted to avoid cheating. When you relaunch the game, data are recovering and you can continue your last game.
 
-## Next update:
-I will add a menu to launch a game and perhaps a timer for difficult levels or for all levels.
-
 ## State:
-- [X] Work in progress
-- [ ] Work completed
+- [ ] Work in progress
+- [X] Work completed
